@@ -1,0 +1,20 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+
+entity FLRCALLCOMPARATOR is
+    port (
+        FlrCodeCall: in std_logic_vector(2 downto 0);
+        FlrCodeCnt: in std_logic_vector(2 downto 0);
+        UP: inout std_logic;
+        DOWN: inout std_logic;
+        STOP: inout std_logic
+    );
+end entity FLRCALLCOMPARATOR;
+
+architecture LogicOperation of FLRCALLCOMPARATOR is
+begin
+    STOP <= '1' when (FlrCodeCall = FlrCodeCnt) else '0';
+    UP <= '1' when (FlrCodeCall > FlrCodeCnt and FlrCodeCnt /= "111") else '0';
+    DOWN <= '1' when (FlrCodeCall < FlrCodeCnt and FlrCodeCnt /= "000") else '0';
+end architecture LogicOperation;
