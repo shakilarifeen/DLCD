@@ -1,0 +1,16 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity SevenSegment is
+    port (
+        a, b, c, d, e, f, g: out std_logic;
+        H0, H1, H2: inout std_logic
+    );
+end entity SevenSegment;
+
+architecture SevenSegmentBehavior of SevenSegment is
+begin
+    a <= H1 or (H2 and H0) or (not H2 and not H0);
+    b <= not H2 or (not H0 and not H1) or (H0 and H1);
+    c <= H0 or not H1 or H2;
+    d <= (not H0 and not H2) or (not H2 and H1) or (H1 and not H0) or (H2 and no
