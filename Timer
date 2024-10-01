@@ -1,0 +1,32 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity Timer is
+    port (
+        Enable: in std_logic;
+        Clk: in std_logic;
+        SetCount: in integer range 0 to 1023;
+        QOut: out std_logic
+    );
+end entity Timer;
+
+architecture TimerBehavior of Timer is
+begin
+    process(Enable, Clk)
+        variable Cnt: integer range 0 to 1023;
+    begin
+        if (Clk'EVENT and Clk = '1') then
+            if Enable = '0' then
+                Cnt := 0;
+                QOut <= '0';
+            end if;
+
+            if SetCount = Cnt then
+                QOut <= '1';
+                Cnt := 0;
+            else
+                Cnt := Cnt + 1;
+            end if;
+        end if;
+    end process;
+end architecture TimerBehavior;
