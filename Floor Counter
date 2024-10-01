@@ -1,0 +1,33 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity FLOORCOUNTER is
+    port (
+        UP, DOWN, Sensor: in std_logic;
+        FLRCODE: out std_logic_vector(2 downto 0)
+    );
+end entity FLOORCOUNTER;
+
+architecture LogicOperation of FLOORCOUNTER is
+    signal FloorCnt: integer range 0 to 4 := 0;
+begin
+    process(UP, DOWN, Sensor)
+    begin
+        FLRCODE <= std_logic_vector(to_unsigned(FloorCnt, 3));
+        
+        if (Sensor = '1') then
+            if UP = '1' and DOWN = '0' then
+                FloorCnt <= FloorCnt + 1;
+            elsif UP = '0' and DOWN = '1' then
+                FloorCnt <= FloorCnt - 1;
+            end if;
+
+            if FloorCnt > 4 then
+                FloorCnt <= 4;
+            elsif FloorCnt < 0 then
+                FloorCnt <= 0;
+            end if;
+        end if;
+    end process;
+end architecture LogicOperation;
